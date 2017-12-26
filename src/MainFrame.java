@@ -16,7 +16,7 @@ public class MainFrame extends JFrame {
     private JPanel toolPane = new JPanel(new GridLayout(1,2,5,5));
     private JButton jbtnAddBoat = new JButton("Add Boat");
     private JButton jbtnExit = new JButton("Exit");
-    private Image mouseCursor = new ImageIcon("cursor.jpg").getImage();
+    private Image mouseCursor = new ImageIcon("cursor.png").getImage();
     private Boat selectedBoat;
     private boolean flag = false;
     private int imgW,imgH;
@@ -64,7 +64,7 @@ public class MainFrame extends JFrame {
 
             @Override
             public void mouseReleased(MouseEvent e) {
-
+                jpn.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
 
             @Override
@@ -77,6 +77,12 @@ public class MainFrame extends JFrame {
 
             }
         });
+        cp = this.getContentPane();
+        cp.setLayout(new BorderLayout(3,3));
+        cp.add(jpn, BorderLayout.CENTER);
+        cp.add(toolPane, BorderLayout.NORTH);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.validate();
     }
 
     public void setSelectedBoat (Boat boat1){
@@ -89,7 +95,9 @@ public class MainFrame extends JFrame {
         private int imgW,imgH;
     public ImagePanel(){
             try {
-                image = ImageIO.read(new File("img.jpg"));
+                image = ImageIO.read(new File("img.png"));
+                imgH = image.getHeight();
+                imgW = image.getWidth();
             }catch (IOException ex){ }
         }
         @Override

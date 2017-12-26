@@ -1,4 +1,6 @@
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Random;
@@ -40,5 +42,41 @@ class Boat extends JLabel implements Runnable {
             public void mouseExited(MouseEvent e) {
             }
         });
+    }
+    public void movingShip(int x1, int y1){
+        System.out.println(">>>>" + x1 + ", " + y1);
+        t1 = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                double m = (double)( y1-y )/(double)( x1-x );
+                System.out.println("m = " + m);
+                int x2 = 0 , y2 = 0;
+                if(x1 > x){
+                    x2 = x+10;
+                    if(x2 > x1){
+                        x2 = x1;
+                    }
+                }else {
+                    x2 = x-10;
+                    if(x2 < x1){
+                        x2 = x1;
+                    }
+                }
+                y2 = y + (int)(( x2 -x ) * m);
+                Boat.this.setLocation(x2,y2);
+                System.out.println("-->"+ x2 + ", "+ y2);
+                x = x2;
+                y = y2;
+                if(x2 == x1){
+                    t1.stop();
+                }
+            }
+        });
+        t1.start();
+    }
+
+    @Override
+    public void run(){
+        this.repaint();
     }
 }
